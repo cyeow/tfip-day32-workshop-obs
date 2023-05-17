@@ -1,0 +1,75 @@
+<h1>Todo</h1>
+<mat-card style="padding: 20px;">
+    <form (submit)="addTodo()" [formGroup]="form">
+        <mat-card-header>
+            <table>
+                <tr>
+                    <td>Title</td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="title" />
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description</td>
+                    <td>
+                        <mat-form-field>
+                            <textarea matInput name="" id="" cols="50" rows="1"
+                                formControlName="description"></textarea>
+                        </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+        </mat-card-header>
+        <button mat-flat-button color="primary" type="button" (click)="addTask()"><mat-icon>add</mat-icon> Add Task</button><br>
+        <table *ngIf="taskArray.length > 0">
+            <tr style="text-align: center;">
+                <td></td>
+                <td>Task</td>
+                <td>Priority</td>
+                <td>Due Date</td>
+                <td>Completed</td>
+            </tr>
+            <tbody formArrayName="tasks">
+                <tr *ngFor="let t of taskArray.controls; let i = index" [formGroupName]="i">
+                    <td>
+                        <button mat-button (click)="removeTask(i)"><mat-icon>remove</mat-icon></button>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="name">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-button-toggle-group formControlName="priority">
+                            <mat-button-toggle value="1">Low</mat-button-toggle>
+                            <mat-button-toggle value="2">Medium</mat-button-toggle>
+                            <mat-button-toggle value="3">High</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <input matInput [matDatepicker]="picker" formControlName="dueDate" />
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </td>
+                    <td style="display: flex; justify-content: center;">
+                        <!-- <input type="checkbox" name="" id="" formControlName="completed"> -->
+                        <mat-slide-toggle formControlName="completed"></mat-slide-toggle>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div *ngIf="taskArray.length > 0">
+            <mat-card-actions>
+                <button mat-flat-button color="primary" type="button" (click)="addTask()"><mat-icon>add</mat-icon> Add Task</button>
+                <div style="display: flex; justify-content: end; margin-left: 550px;">
+                    <button mat-flat-button color="accent" type="submit" [disabled]="invalid()"><mat-icon>save</mat-icon> Save Todo</button>
+                </div>
+            </mat-card-actions>
+        </div>
+    </form>
+</mat-card>

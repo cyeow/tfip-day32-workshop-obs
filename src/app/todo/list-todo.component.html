@@ -1,0 +1,13 @@
+<h1>All Todos</h1>
+
+<mat-card *ngFor="let todo of todoList; let i = index" style="margin-top: 10px; margin-bottom: 10px;">
+    <mat-card-header matCardTitle>{{ todo.title }}</mat-card-header>
+    <mat-card-content>
+        <span *ngIf="getOutstandingTasks(i) > 0 else noTasks">{{ getOutstandingTasks(i) }} / {{ todo.tasks.length }} tasks outstanding</span>
+        <ng-template #noTasks>{{ todo.tasks.length }} tasks completed, yay all done!</ng-template>
+    </mat-card-content>
+    <mat-card-actions style="display: flex; align-content: end; justify-content:end;">
+        <button mat-flat-button color="primary" (click)="editTodo(i)"><mat-icon>edit</mat-icon> Edit</button>
+        <button mat-flat-button color="warn" (click)="removeTodo(i)"><mat-icon>delete</mat-icon> Delete</button>
+    </mat-card-actions>
+</mat-card>
